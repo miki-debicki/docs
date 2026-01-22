@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(npm --version:*)",
+      "Bash(node --version:*)",
+      "Bash(mint --version:*)",
+      "Bash(npm i:*)",
+      "Bash(echo:*)",
+      "Bash(~/.zshrc)",
+      "Bash(export PATH=~/.npm-global/bin:$PATH)",
+      "Bash(timeout 10 mint dev:*)",
+      "Bash(mint dev)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(git checkout:*)",
+      "Bash(git rev-parse:*)"
+    ]
+  }
+}

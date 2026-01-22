@@ -1,0 +1,60 @@
+---
+title: "Error Handling"
+description: "Handle errors gracefully in your Metorial SDK applications"
+---
+
+Handle errors gracefully in your applications.
+
+<Note>
+**What you'll learn:**
+- Common error types
+- Error handling patterns
+- Debugging tips
+</Note>
+
+## Catching Errors
+
+<CodeGroup>
+```typescript TypeScript
+import { MetorialAPIError } from 'metorial';
+
+try {
+    await metorial.withProviderSession(
+        provider,
+        { serverDeployments: [{ serverDeploymentId: 'dep_123' }] },
+        async ({ tools, closeSession }) => {
+            // Your logic
+            await closeSession();
+        }
+    );
+} catch (error) {
+    if (error instanceof MetorialAPIError) {
+        console.error(`API Error: ${error.message}`);
+    }
+}
+```
+
+```python Python
+from metorial import MetorialAPIError
+
+async def session_handler(session):
+    # Your logic
+    pass
+
+try:
+    await metorial.with_provider_session(
+        MetorialAnthropic,
+        [{"serverDeploymentId": "dep_123"}],
+        session_handler
+    )
+except MetorialAPIError as e:
+    print(f"API Error: {e.message}")
+```
+</CodeGroup>
+
+## Common Errors
+
+- `DEPLOYMENT_NOT_FOUND`: Invalid deployment ID
+- `SESSION_LIMIT_REACHED`: Too many concurrent sessions
+- `OAUTH_SESSION_EXPIRED`: Reauthorization needed
+- `RATE_LIMIT_EXCEEDED`: Slow down requests

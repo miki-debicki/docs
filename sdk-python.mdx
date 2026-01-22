@@ -1,0 +1,61 @@
+---
+title: "Python SDK"
+description: "Learn how to use the Metorial Python SDK for Python applications"
+---
+
+The Metorial Python SDK allows you to interact with the Metorial API using Python.
+
+<Note>
+**What you'll learn:**
+- How to install the Metorial Python SDK
+- How to make requests to the Metorial API using the SDK
+
+**Before you start:**
+- [Create your API Keys](/docs/getting-started-with-the-api)
+
+**External resources:**
+- [Python SDK on GitHub](https://github.com/metorial/metorial/tree/main/clients/metorial-py)
+</Note>
+
+<Steps>
+  <Step title="Install the SDK">
+    To install the Metorial Python SDK, use pip install:
+
+    ```bash
+    pip install metorial
+    ```
+  </Step>
+
+  <Step title="Using the SDK">
+    To use the SDK, import the `Metorial` class and create an instance with your API key:
+
+    ```python
+    from metorial import Metorial
+
+    metorial = Metorial(
+      api_key="$$SECRET_TOKEN$$"
+    )
+    ```
+
+    You can now use the `metorial` instance to make requests to the Metorial API.
+  </Step>
+
+  <Step title="Making Requests">
+    To make a request, use the resource methods on the `metorial` instance:
+
+    ```python
+    # Get a server by ID
+    server = metorial.servers.get('srv_Rm4Mnheq2bfEPhBhP7SY')
+
+    # Update a server instance
+    result = metorial.server_implementations.update('svi_Rm4Mnheq2bfEPhBhP7SY', {
+      "name": "updated name",
+      "description": "updated description"
+    })
+    ```
+  </Step>
+
+  <Step title="Using Types">
+    The SDK is typed and includes type definitions for all API resources, so you can benefit from type checking and IntelliSense support.
+  </Step>
+</Steps>

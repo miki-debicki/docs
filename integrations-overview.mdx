@@ -1,0 +1,94 @@
+---
+title: 'Integrations Overview'
+description: 'Pre-built MCP server integrations that you can deploy without writing any code'
+---
+
+Metorial provides pre-built MCP server integrations that you can deploy without writing any code.
+
+<Info>
+**What you'll learn**
+- What integrations are available
+- Authentication types (OAuth vs API key)
+- Licensing and deployment options
+
+**Related resources**
+- [Browsing the Catalog](/integrations-browsing-catalog)
+- [Deploy Your First Server](/getting-started-your-first-deployment)
+</Info>
+
+## What Are Integrations?
+
+Integrations are pre-built MCP servers that provide ready-to-use tools for various services like GitHub, Slack, Google Calendar, Exa, and more.
+
+## Licensing
+
+Metorial is licensed under the **FSL (Functional Source License)**. This means:
+
+- **Source available**: You can view and audit the code
+- **Free for evaluation and development**
+- **Commercial use** requires a license for production deployments
+
+## Deployment Options
+
+### Cloud SaaS
+
+Use Metorial's hosted cloud service at [app.metorial.com](https://app.metorial.com):
+- No infrastructure to manage
+- Automatic updates and scaling
+- Quick setup
+
+### Enterprise On-Premises
+
+For enterprises requiring on-premises deployment:
+- Deploy on **AWS**, **GCP**, or other cloud providers
+- Uses **HashiStack** (Nomad, Vault, Consul) for orchestration
+- Full control over infrastructure and data
+- Contact us for enterprise licensing
+
+## Authentication Types
+
+### API Key Integrations
+
+Simpler setup - just provide your API credentials.
+
+**Examples**: Exa, Tavily
+
+**Setup**:
+1. Get API key from the service
+2. Create deployment in Metorial
+3. Paste API key in configuration
+
+### OAuth Integrations
+
+User authorization required - each user authorizes access.
+
+**Examples**: Slack, GitHub, Google Calendar
+
+**Common patterns**:
+- **One-time authorization**: User authorizes once, you store and reuse the session
+- **Enterprise BYO**: Bring your own OAuth app credentials
+- **OAuth export/import**: Reduce friction by importing existing tokens
+
+See [OAuth Integrations](/integrations-oauth) for detailed patterns.
+
+## Choosing Integrations
+
+**Single-user applications**: API key integrations work well.
+
+**Multi-user applications**: Use OAuth integrations for user-specific access.
+
+**Enterprise**: Consider BYO OAuth apps with dynamic server deployments.
+
+## Getting Started
+
+<CardGroup cols={3}>
+  <Card title="Browse the Catalog" icon="grid" href="/integrations-browsing-catalog">
+    Explore available integrations.
+  </Card>
+  <Card title="API Key Setup" icon="key" href="/integrations-api-key">
+    Deploy an API key-based integration.
+  </Card>
+  <Card title="OAuth Setup" icon="lock" href="/integrations-oauth">
+    Deploy an OAuth-based integration.
+  </Card>
+</CardGroup>

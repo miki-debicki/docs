@@ -1,0 +1,61 @@
+---
+title: "OpenAI-Compatible Providers"
+description: "Use Metorial with DeepSeek, TogetherAI, XAI, and other OpenAI-compatible APIs"
+---
+
+Use Metorial with DeepSeek, TogetherAI, XAI, and other OpenAI-compatible APIs.
+
+## Example
+
+<CodeGroup>
+```typescript TypeScript
+import { Metorial } from 'metorial';
+import { metorialDeepSeek } from '@metorial/deepseek';
+import OpenAI from 'openai';
+
+let metorial = new Metorial({ apiKey: process.env.METORIAL_API_KEY });
+let deepseek = new OpenAI({
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    baseURL: 'https://api.deepseek.com'
+});
+
+await metorial.withProviderSession(
+    metorialDeepSeek.chatCompletions,
+    { serverDeployments: [{ serverDeploymentId: 'your-deployment-id' }] },
+    async ({ tools, closeSession }) => {
+        let response = await deepseek.chat.completions.create({
+            model: 'deepseek-chat',
+            messages: [{ role: 'user', content: 'Help me' }],
+            tools: tools
+        });
+
+        await closeSession();
+    }
+);
+```
+
+```python Python
+import os
+from metorial import Metorial, MetorialOpenAI
+from openai import AsyncOpenAI
+
+metorial = Metorial(api_key=os.getenv("METORIAL_API_KEY"))
+deepseek = AsyncOpenAI(
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    base_url="https://api.deepseek.com"
+)
+
+async def session_handler(session):
+    response = await deepseek.chat.completions.create(
+        model="deepseek-chat",
+        messages=[{"role": "user", "content": "Help me"}],
+        tools=session["tools"]
+    )
+
+await metorial.with_provider_session(
+    MetorialOpenAI,  # Use OpenAI provider for compatible APIs
+    [{"serverDeploymentId": "your-deployment-id"}],
+    session_handler
+)
+```
+</CodeGroup>

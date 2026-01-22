@@ -1,68 +1,141 @@
 {
   "$schema": "https://mintlify.com/docs.json",
+  "name": "Metorial Documentation",
   "theme": "mint",
-  "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#0984e3",
+    "light": "#74b9ff",
+    "dark": "#0652a8"
   },
   "favicon": "/favicon.svg",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Getting Started",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Metorial 101",
             "pages": [
               "index",
-              "quickstart",
-              "development"
+              "metorial-101-introduction",
+              "metorial-101-deploying",
+              "metorial-101-testing",
+              "metorial-101-using",
+              "metorial-101-monitoring"
             ]
           },
           {
-            "group": "Customization",
+            "group": "API & SDKs",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "api-getting-started",
+              "sdk-javascript",
+              "sdk-python"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Concepts",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Core Concepts",
             "pages": [
-              "api-reference/introduction"
+              "concepts-projects-organizations",
+              "concepts-server-deployments",
+              "concepts-sessions",
+              "concepts-environments",
+              "concepts-monitoring"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Custom Servers",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "custom-servers-overview"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Managed Servers",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "custom-servers-managed-getting-started",
+              "custom-servers-managed-configuration",
+              "custom-servers-managed-deployment"
+            ]
+          },
+          {
+            "group": "External Servers",
+            "pages": [
+              "custom-servers-external-connecting",
+              "custom-servers-external-authentication"
+            ]
+          },
+          {
+            "group": "Forked Servers",
+            "pages": [
+              "custom-servers-forking-overview",
+              "custom-servers-forking-customizing"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "integrations-overview",
+              "integrations-browsing-catalog"
+            ]
+          },
+          {
+            "group": "Setup Guides",
+            "pages": [
+              "integrations-api-key",
+              "integrations-oauth",
+              "integrations-enterprise-byo"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDK",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "sdk-quickstart",
+              "sdk-javascript",
+              "sdk-python",
+              "sdk-error-handling"
+            ]
+          },
+          {
+            "group": "OAuth",
+            "pages": [
+              "sdk-oauth-overview",
+              "sdk-oauth-creating",
+              "sdk-oauth-using",
+              "sdk-oauth-waiting"
+            ]
+          },
+          {
+            "group": "Providers",
+            "pages": [
+              "sdk-providers-overview",
+              "sdk-providers-ai-sdk",
+              "sdk-providers-openai",
+              "sdk-providers-anthropic",
+              "sdk-providers-google",
+              "sdk-providers-openai-compatible"
             ]
           }
         ]
@@ -71,52 +144,49 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Dashboard",
+          "href": "https://app.metorial.com",
+          "icon": "square-terminal"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Status",
+          "href": "https://status.metorial.com",
+          "icon": "circle-check"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/metorial",
+          "icon": "github"
         }
       ]
     }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@metorial.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://app.metorial.com"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "cursor"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/metorial",
+      "x": "https://x.com/MetorialAi"
     }
   }
 }

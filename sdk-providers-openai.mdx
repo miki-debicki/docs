@@ -1,0 +1,58 @@
+---
+title: "Using with OpenAI"
+description: "Use Metorial with OpenAI GPT models"
+---
+
+Use Metorial with OpenAI GPT models.
+
+## Example
+
+<CodeGroup>
+```typescript TypeScript
+import { Metorial } from 'metorial';
+import { metorialOpenAI } from '@metorial/openai';
+import OpenAI from 'openai';
+
+let metorial = new Metorial({ apiKey: process.env.METORIAL_API_KEY });
+let openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+await metorial.withProviderSession(
+    metorialOpenAI.chatCompletions,
+    { serverDeployments: [{ serverDeploymentId: 'your-deployment-id' }] },
+    async ({ tools, callTools, closeSession }) => {
+        let response = await openai.chat.completions.create({
+            model: 'gpt-4o',
+            messages: [{ role: 'user', content: 'Help me' }],
+            tools: tools
+        });
+
+        // Handle tool calls
+        await closeSession();
+    }
+);
+```
+
+```python Python
+import os
+from metorial import Metorial, MetorialOpenAI
+from openai import AsyncOpenAI
+
+metorial = Metorial(api_key=os.getenv("METORIAL_API_KEY"))
+openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+async def session_handler(session):
+    response = await openai.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "user", "content": "Help me"}],
+        tools=session["tools"]
+    )
+
+    # Handle tool calls with session["callTools"]
+
+await metorial.with_provider_session(
+    MetorialOpenAI,
+    [{"serverDeploymentId": "your-deployment-id"}],
+    session_handler
+)
+```
+</CodeGroup>

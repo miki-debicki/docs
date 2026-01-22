@@ -1,0 +1,30 @@
+---
+title: 'Enterprise BYO'
+description: 'Bring Your Own credentials for enterprise deployments'
+---
+
+Bring Your Own credentials for enterprise deployments.
+
+## Dynamic Server Deployments
+
+For enterprise use cases, you can create server deployments programmatically via the API with your own credentials.
+
+This is useful for:
+- Using your own OAuth app credentials
+- Compliance with enterprise security policies
+- Managing credentials in your own infrastructure
+
+See the [Server Deployment API](/api/server-deployment) for details.
+
+## BYO OAuth
+
+Use your own OAuth app credentials:
+
+1. Register your OAuth app with the service (GitHub, Slack, etc.)
+2. Create a server deployment via the API with your OAuth credentials
+3. Use the deployment like normal
+
+This allows you to:
+- Control branding in OAuth consent screens
+- Use your company's existing OAuth apps
+- Manage OAuth credentials independently

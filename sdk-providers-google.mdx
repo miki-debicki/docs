@@ -1,0 +1,53 @@
+---
+title: "Using with Google"
+description: "Use Metorial with Google Gemini models"
+---
+
+Use Metorial with Google Gemini models.
+
+## Example
+
+<CodeGroup>
+```typescript TypeScript
+import { Metorial } from 'metorial';
+import { metorialGoogle } from '@metorial/google';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+let metorial = new Metorial({ apiKey: process.env.METORIAL_API_KEY });
+let genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+
+await metorial.withProviderSession(
+    metorialGoogle,
+    { serverDeployments: [{ serverDeploymentId: 'your-deployment-id' }] },
+    async ({ tools, closeSession }) => {
+        let model = genAI.getGenerativeModel({
+            model: 'gemini-pro',
+            tools: tools
+        });
+
+        await closeSession();
+    }
+);
+```
+
+```python Python
+import os
+from metorial import Metorial, MetorialGoogle
+import google.generativeai as genai
+
+metorial = Metorial(api_key=os.getenv("METORIAL_API_KEY"))
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+async def session_handler(session):
+    model = genai.GenerativeModel(
+        'gemini-pro',
+        tools=session["tools"]
+    )
+
+await metorial.with_provider_session(
+    MetorialGoogle,
+    [{"serverDeploymentId": "your-deployment-id"}],
+    session_handler
+)
+```
+</CodeGroup>

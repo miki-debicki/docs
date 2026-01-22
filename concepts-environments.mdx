@@ -1,0 +1,121 @@
+---
+title: "Development vs Production Environments"
+description: "Metorial uses instances to separate your development and production environments, allowing you to test safely before deploying to production."
+---
+
+# Development vs Production Environments
+
+Metorial uses instances to separate your development and production environments, allowing you to test safely before deploying to production.
+
+<Note>
+**What you'll learn:**
+- The difference between development and production instances
+- How to work across environments
+- Best practices for environment management
+
+**References:**
+- [Projects and Organizations](/concepts-projects-organizations)
+</Note>
+
+## Understanding Instances
+
+An **instance** represents an isolated environment within your project. Each instance has its own:
+
+- Server deployments
+- API keys
+- OAuth sessions
+- Logs and metrics
+
+Changes in one instance don't affect others, allowing you to test safely.
+
+## Instance Types
+
+### Development Instance
+
+Your default workspace for building and testing.
+
+**Characteristics**:
+- Lower rate limits (100 requests per 10 minutes)
+- Shorter log retention
+- Free or low-cost testing
+- Isolated from production
+
+**Use for**:
+- Writing and debugging code
+- Testing new deployments
+- Experimenting with integrations
+- Training team members
+
+### Production Instance
+
+Your live environment for real users and applications.
+
+**Characteristics**:
+- Higher rate limits (5,000 requests per 10 minutes)
+- Extended log retention
+- Premium features enabled
+- Optimized infrastructure
+
+**Use for**:
+- Live applications
+- Real user traffic
+- Business-critical operations
+- SLA-backed services
+
+## Working Across Environments
+
+### Switching Instances
+
+In the Metorial dashboard, use the instance dropdown in the navigation to switch between environments.
+
+### Separate API Keys
+
+Use different API keys for each instance:
+
+<CodeGroup>
+```typescript TypeScript
+// Development
+let devMetorial = new Metorial({
+    apiKey: process.env.METORIAL_DEV_KEY
+});
+
+// Production
+let prodMetorial = new Metorial({
+    apiKey: process.env.METORIAL_PROD_KEY
+});
+```
+
+```python Python
+import os
+from metorial import Metorial
+
+# Development
+dev_metorial = Metorial(api_key=os.getenv("METORIAL_DEV_KEY"))
+
+# Production
+prod_metorial = Metorial(api_key=os.getenv("METORIAL_PROD_KEY"))
+```
+</CodeGroup>
+
+### Separate Deployments
+
+Create matching deployments in each instance with appropriate credentials for that environment.
+
+## Best Practices
+
+**Never share credentials**: Use separate API keys and OAuth apps for each environment.
+
+**Test before production**: Always test deployments in development before using in production.
+
+**Access control**: Limit production access to necessary team members.
+
+## What's Next?
+
+<CardGroup cols={2}>
+  <Card title="Monitoring Guide" icon="chart-line" href="/concepts-monitoring">
+    Learn how to monitor your deployments.
+  </Card>
+  <Card title="Deploy Your First Server" icon="server" href="/metorial-101-deploying">
+    Create your first deployment in development.
+  </Card>
+</CardGroup>

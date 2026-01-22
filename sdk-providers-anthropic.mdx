@@ -1,0 +1,57 @@
+---
+title: "Using with Anthropic"
+description: "Use Metorial with Claude models"
+---
+
+Use Metorial with Claude models.
+
+## Example
+
+<CodeGroup>
+```typescript TypeScript
+import { Metorial } from 'metorial';
+import { metorialAnthropic } from '@metorial/anthropic';
+import Anthropic from '@anthropic-ai/sdk';
+
+let metorial = new Metorial({ apiKey: process.env.METORIAL_API_KEY });
+let anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+await metorial.withProviderSession(
+    metorialAnthropic,
+    { serverDeployments: [{ serverDeploymentId: 'your-deployment-id' }] },
+    async ({ tools, callTools, closeSession }) => {
+        let response = await anthropic.messages.create({
+            model: 'claude-sonnet-4-5',
+            max_tokens: 1024,
+            messages: [{ role: 'user', content: 'Help me' }],
+            tools: tools
+        });
+
+        await closeSession();
+    }
+);
+```
+
+```python Python
+import os
+from metorial import Metorial, MetorialAnthropic
+from anthropic import AsyncAnthropic
+
+metorial = Metorial(api_key=os.getenv("METORIAL_API_KEY"))
+anthropic = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+async def session_handler(session):
+    response = await anthropic.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=1024,
+        messages=[{"role": "user", "content": "Help me"}],
+        tools=session["tools"]
+    )
+
+await metorial.with_provider_session(
+    MetorialAnthropic,
+    [{"serverDeploymentId": "your-deployment-id"}],
+    session_handler
+)
+```
+</CodeGroup>
