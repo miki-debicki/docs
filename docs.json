@@ -35,11 +35,9 @@
             ]
           },
           {
-            "group": "API & SDKs",
+            "group": "API",
             "pages": [
-              "api-getting-started",
-              "sdk-javascript",
-              "sdk-python"
+              "api-getting-started"
             ]
           }
         ]

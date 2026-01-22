@@ -3,10 +3,6 @@ title: "Development vs Production Environments"
 description: "Metorial uses instances to separate your development and production environments, allowing you to test safely before deploying to production."
 ---
 
-# Development vs Production Environments
-
-Metorial uses instances to separate your development and production environments, allowing you to test safely before deploying to production.
-
 <Note>
 **What you'll learn:**
 - The difference between development and production instances
@@ -26,7 +22,7 @@ An **instance** represents an isolated environment within your project. Each ins
 - OAuth sessions
 - Logs and metrics
 
-Changes in one instance don't affect others, allowing you to test safely.
+Changes in one instance don't affect others, allowing you to test in isolation.
 
 ## Instance Types
 
@@ -34,33 +30,9 @@ Changes in one instance don't affect others, allowing you to test safely.
 
 Your default workspace for building and testing.
 
-**Characteristics**:
-- Lower rate limits (100 requests per 10 minutes)
-- Shorter log retention
-- Free or low-cost testing
-- Isolated from production
-
-**Use for**:
-- Writing and debugging code
-- Testing new deployments
-- Experimenting with integrations
-- Training team members
-
 ### Production Instance
 
 Your live environment for real users and applications.
-
-**Characteristics**:
-- Higher rate limits (5,000 requests per 10 minutes)
-- Extended log retention
-- Premium features enabled
-- Optimized infrastructure
-
-**Use for**:
-- Live applications
-- Real user traffic
-- Business-critical operations
-- SLA-backed services
 
 ## Working Across Environments
 
@@ -96,10 +68,6 @@ dev_metorial = Metorial(api_key=os.getenv("METORIAL_DEV_KEY"))
 prod_metorial = Metorial(api_key=os.getenv("METORIAL_PROD_KEY"))
 ```
 </CodeGroup>
-
-### Separate Deployments
-
-Create matching deployments in each instance with appropriate credentials for that environment.
 
 ## Best Practices
 

@@ -3,10 +3,6 @@ title: "Server Deployments"
 description: "Server deployments are the core building blocks of Metorial. They define which integrations and tools your AI applications can access."
 ---
 
-# Server Deployments
-
-Server deployments are the core building blocks of Metorial. They define which integrations and tools your AI applications can access.
-
 <Note>
 **What you'll learn:**
 - What server deployments are and how they work
@@ -27,8 +23,8 @@ Server deployments are the core building blocks of Metorial. They define which i
 **Server Deployment**: A configured, ready-to-use instance of a server with your specific credentials and settings.
 
 Think of it like this:
-- **Server** = Recipe
-- **Deployment** = Cooked meal with your ingredients
+- **Server** = Your Class template
+- **Deployment** = Your instance with a particular configuration
 
 ### Why Deployments?
 
@@ -38,9 +34,9 @@ Deployments allow you to:
 - **Manage multiple instances**: Create separate deployments for dev and production
 - **Control access**: Different API keys and OAuth sessions per deployment
 
-## Types of Deployments
+## Types of Servers
 
-### Integration Deployments
+### Out-of-the-box servers
 
 Deploy pre-built servers from the Metorial catalog.
 
@@ -94,10 +90,10 @@ await metorial.with_provider_session(
 ## What's Next?
 
 <CardGroup cols={2}>
-  <Card title="Sessions Guide" icon="plug" href="/concepts-sessions">
+  <Card title="Sessions Guide" icon="circle-dot" href="/concepts-sessions">
     Understand how sessions connect to deployments.
   </Card>
-  <Card title="OAuth Integrations" icon="lock" href="/integrations-oauth-integrations">
+  <Card title="OAuth Integrations" icon="shield" href="/integrations-oauth">
     Set up OAuth-based deployments.
   </Card>
 </CardGroup>
