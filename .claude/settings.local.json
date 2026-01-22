@@ -14,7 +14,10 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(git checkout:*)",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(grep:*)",
+      "Bash(mintlify dev:*)",
+      "Bash(npx mintlify dev)"
     ]
   }
 }

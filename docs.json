@@ -2,10 +2,16 @@
   "$schema": "https://mintlify.com/docs.json",
   "name": "Metorial Documentation",
   "theme": "mint",
+  "defaultColorMode": "light",
   "colors": {
-    "primary": "#0984e3",
-    "light": "#74b9ff",
-    "dark": "#0652a8"
+    "primary": "#0099ff",
+    "light": "#4eb8ff",
+    "dark": "#006ab1"
+  },
+  "font": {
+    "headings": "Inter",
+    "body": "Inter",
+    "code": "JetBrains Mono"
   },
   "favicon": "/favicon.svg",
   "logo": {
@@ -171,7 +177,8 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.metorial.com"
+      "href": "https://app.metorial.com",
+      "color": "#0099ff"
     }
   },
   "contextual": {
