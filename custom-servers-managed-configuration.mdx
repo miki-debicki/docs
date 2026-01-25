@@ -10,21 +10,25 @@ description: "Configure environment variables, resource limits, and server setti
 - Build configuration
 </Note>
 
+Configure your managed server's runtime behavior through environment variables and resource limits. These settings control how your server runs and how much resources it can use.
+
 ## Environment Variables
 
 Set sensitive configuration in Environment Variables section.
 
 ## Resource Limits
 
-Configure memory, timeout, and concurrency limits.
+Set memory, timeout, and concurrency limits for your server.
+
+<Info>
+**Resource Settings:**
+- **Memory**: Controls how much RAM your server can use
+- **Timeout**: Defines how long a single request can run
+- **Concurrency**: Maximum number of simultaneous requests
+</Info>
 
 ## What's Next?
 
-<CardGroup cols={2}>
-  <Card title="Getting Started" icon="play" href="/custom-servers-managed-getting-started">
-    Learn how to create your first managed server.
-  </Card>
-  <Card title="Deployment" icon="rocket" href="/custom-servers-managed-deployment">
-    Learn about deploying and managing versions.
-  </Card>
-</CardGroup>
+<Card title="Deployment" icon="rocket" href="/custom-servers-managed-deployment">
+  Learn about deploying and managing versions.
+</Card>

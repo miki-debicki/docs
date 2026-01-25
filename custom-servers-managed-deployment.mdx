@@ -10,25 +10,42 @@ description: "Learn how to deploy and manage versions of your custom MCP servers
 - Rollback strategies
 </Note>
 
+Deploy your managed server code and manage different versions over time. Metorial automatically builds and deploys your code when you upload it.
+
 ## Creating Deployments
 
-Upload code and click Deploy. Metorial builds and deploys automatically.
+<Steps>
+  <Step title="Upload Code">
+    Upload your server code through the dashboard.
+  </Step>
+  <Step title="Click Deploy">
+    Metorial builds your server and installs dependencies automatically.
+  </Step>
+  <Step title="Validation">
+    The build process validates your code and reports any errors.
+  </Step>
+  <Step title="Go Live">
+    Your server deploys and becomes available for use.
+  </Step>
+</Steps>
 
 ## Version Management
 
-Each deployment creates a new version. View versions in the dashboard.
+Each deployment creates a new version with a unique version number. View all versions in the dashboard, including deployment timestamps and the code changes in each version. You can switch between versions at any time.
+
+<Info>
+**Version History:**
+- Every deployment is preserved
+- View timestamps and changes
+- Switch between versions instantly
+</Info>
 
 ## Rolling Back
 
-Revert to a previous version if issues occur.
+Revert to any previous version if you encounter issues with a new deployment. Select the version you want to restore and click Deploy. Rolling back is instant and doesn't require rebuilding your code.
 
 ## What's Next?
 
-<CardGroup cols={2}>
-  <Card title="Getting Started" icon="play" href="/custom-servers-managed-getting-started">
-    Learn how to create your first managed server.
-  </Card>
-  <Card title="Configuration" icon="gear" href="/custom-servers-managed-configuration">
-    Configure your server settings.
-  </Card>
-</CardGroup>
+<Card title="Configuration" icon="gear" href="/custom-servers-managed-configuration">
+  Configure your server settings.
+</Card>
