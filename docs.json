@@ -187,7 +187,14 @@
   "footer": {
     "socials": {
       "github": "https://github.com/metorial",
-      "x": "https://x.com/MetorialAi"
+      "x": "https://x.com/MetorialAi",
+      "linkedin": "https://www.linkedin.com/company/metorial"
     }
+  },
+  "seo": {
+    "indexing": "all"
+  },
+  "appearance": {
+    "default": "light"
   }
 }
