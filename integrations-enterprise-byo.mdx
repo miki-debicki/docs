@@ -1,107 +1,429 @@
 ---
-title: 'Enterprise BYO'
-description: 'Bring Your Own credentials for enterprise deployments with dynamic server deployments'
+title: 'Enterprise BYO (Bring Your Own)'
+description: 'Bring your own credentials for enterprise-grade control, compliance, and multi-tenancy'
 ---
 
-<Note>
-**What you'll learn:**
-- Dynamic server deployment creation via API
-- BYO OAuth app configuration
-- Enterprise compliance patterns
+For enterprise teams that need full control over authentication, credentials, and infrastructure, Metorial supports Bring Your Own (BYO) credentials. Create server deployments dynamically via API using your own OAuth apps and API keys—no dashboard required.
 
-**Related resources:**
-- [Getting Started with the API](/api-getting-started)
-- [OAuth Integrations](/integrations-oauth)
+<Note>
+**In this guide:**
+- Create server deployments programmatically via API
+- Configure BYO OAuth apps for branded authentication
+- Set up BYO API keys for multi-tenant isolation
+- Enterprise compliance and security patterns
+
+**Prerequisites:**
+- Metorial API key
+- Your OAuth app credentials or API keys
+- Understanding of [OAuth Integrations](/integrations-oauth) (for BYO OAuth)
 </Note>
 
-Need full control over OAuth apps and API keys for compliance, branding, or security? Metorial lets you create server deployments dynamically via the API using your own credentials—no dashboard required.
+## Why Bring Your Own Credentials?
 
-## Why BYO?
+Enterprise teams choose BYO for full control over authentication, compliance, and infrastructure management.
 
-Using your own credentials gives you full control over how your users authenticate and how your infrastructure handles sensitive data. Enterprise teams choose BYO for three main reasons:
+### Compliance & Security
 
-<Info>
-**Compliance & Security:**
-- Keep credentials in your own infrastructure
-- Meet data residency requirements
-- Audit and rotate credentials on your schedule
-</Info>
+<CardGroup cols={2}>
+  <Card title="Data Residency" icon="globe">
+    Keep credentials in your own infrastructure to meet regional compliance requirements
+  </Card>
+  <Card title="Audit & Control" icon="shield-check">
+    Audit access, rotate credentials, and manage security on your schedule
+  </Card>
+  <Card title="Zero Trust" icon="lock">
+    Credentials never leave your infrastructure—Metorial proxies requests
+  </Card>
+  <Card title="Custom Policies" icon="file-contract">
+    Enforce your organization's credential management policies
+  </Card>
+</CardGroup>
 
-<Info>
-**Branding & Control:**
-- OAuth consent screens show your company name
-- Use your company's existing OAuth apps
-- Control which permissions are requested
-</Info>
+### Branding & User Experience
 
-<Info>
-**Multi-tenancy:**
-- Create isolated deployments per customer
-- Different credentials for different organizations
-- Scale deployment creation programmatically
-</Info>
+- **Branded OAuth screens** - Users see your company name, not Metorial
+- **Custom scopes** - Request only the permissions your app needs
+- **Existing OAuth apps** - Reuse apps already registered with your identity provider
+- **Consistent experience** - Match your organization's authentication flow
+
+### Multi-Tenancy & Scale
+
+- **Isolated deployments** - Separate credentials per customer or team
+- **Dynamic provisioning** - Create deployments programmatically as needed
+- **Usage tracking** - Monitor and bill per deployment
+- **Programmatic management** - Full API control for automation
 
 ## Dynamic Server Deployments
 
-Create server deployments programmatically via the Metorial API instead of using the dashboard.
+Create server deployments via API instead of the dashboard. Perfect for multi-tenant applications or programmatic infrastructure management.
 
-**The flow:**
-1. Call the API with your credentials to create a deployment
-2. Receive a deployment ID
-3. Use the deployment ID in your SDK like any other integration
+### How It Works
 
-Ideal for multi-tenant applications where each customer needs isolated credentials, or enterprises managing multiple OAuth apps across teams.
+1. **Call Metorial API** with your credentials to create a deployment
+2. **Receive deployment ID** - A unique identifier for this deployment
+3. **Use in your code** - Pass the deployment ID to Metorial SDK like any other integration
 
-See the [Metorial API documentation](/api-getting-started) for endpoint details, authentication, and request/response schemas.
+<CodeGroup>
+
+```typescript TypeScript
+import { Metorial } from 'metorial';
+
+const metorial = new Metorial({
+    apiKey: process.env.METORIAL_API_KEY
+});
+
+// Create a deployment dynamically
+const deployment = await metorial.deployments.create({
+    serverId: 'github',  // The integration you want to deploy
+    name: 'Customer ABC GitHub',
+    credentials: {
+        clientId: process.env.CUSTOMER_GITHUB_CLIENT_ID,
+        clientSecret: process.env.CUSTOMER_GITHUB_CLIENT_SECRET
+    }
+});
+
+console.log('Deployment created:', deployment.id);
+
+// Use the deployment in your session
+await metorial.withProviderSession(
+    metorialAiSdk,
+    {
+        serverDeployments: [
+            { serverDeploymentId: deployment.id }
+        ]
+    },
+    async ({ tools, closeSession }) => {
+        // Your agent code here
+    }
+);
+```
+
+```python Python
+from metorial import Metorial
+import os
+
+metorial = Metorial(api_key=os.getenv("METORIAL_API_KEY"))
+
+# Create a deployment dynamically
+deployment = metorial.deployments.create(
+    server_id="github",
+    name="Customer ABC GitHub",
+    credentials={
+        "client_id": os.getenv("CUSTOMER_GITHUB_CLIENT_ID"),
+        "client_secret": os.getenv("CUSTOMER_GITHUB_CLIENT_SECRET")
+    }
+)
+
+print(f"Deployment created: {deployment.id}")
+
+# Use the deployment in your session
+async with metorial.provider_session(
+    provider="anthropic",
+    server_deployments=[
+        {
+            "serverDeploymentId": deployment.id,
+            "oauthSessionId": oauth_session_id  # User-specific OAuth session
+        }
+    ]
+) as session:
+    # Your agent code here
+    pass
+```
+
+```bash cURL
+curl -X POST https://api.metorial.com/v1/deployments \
+  -H "Authorization: Bearer $METORIAL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "serverId": "github",
+    "name": "Customer ABC GitHub",
+    "credentials": {
+      "clientId": "your_github_client_id",
+      "clientSecret": "your_github_client_secret"
+    }
+  }'
+```
+
+</CodeGroup>
 
 ## BYO OAuth Apps
 
-Use your own OAuth app credentials instead of Metorial's default OAuth apps.
+Use your own OAuth applications for branded authentication and full scope control.
 
-**Setup process:**
+### Setup Process
 
 <Steps>
   <Step title="Register OAuth App">
-    Register your OAuth app with the service (GitHub, Slack, Google, etc.). Save your client ID and client secret.
+    Register an OAuth app with the service provider (GitHub, Slack, Google, etc.)
+
+    **Required information:**
+    - Redirect URI: `https://oauth.metorial.com/callback`
+    - Scopes: Based on the tools you need (see integration docs)
+
+    **Save your credentials:**
+    - Client ID
+    - Client Secret
   </Step>
 
   <Step title="Create Deployment via API">
-    Call the Metorial API or use the Dashboard to create a server deployment, passing your OAuth app credentials in the request body.
+    Use the Metorial API to create a server deployment with your OAuth app credentials
+
+    ```bash
+    curl -X POST https://api.metorial.com/v1/deployments \
+      -H "Authorization: Bearer $METORIAL_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "serverId": "github",
+        "name": "Production GitHub",
+        "credentials": {
+          "clientId": "Iv1.abc123...",
+          "clientSecret": "ghp_abc123..."
+        }
+      }'
+    ```
   </Step>
 
-  <Step title="Use the Deployment">
-    Use the returned deployment ID in your SDK code like any other deployment. Users will see your OAuth app name when authorizing.
+  <Step title="Create OAuth Sessions">
+    When users need to authorize, create an OAuth session:
+
+    ```typescript
+    const oauthSession = await metorial.oauth.sessions.create({
+        serverDeploymentId: deployment.id
+    });
+
+    // Redirect user to authorization URL
+    console.log('Authorize here:', oauthSession.url);
+
+    // Wait for completion
+    await metorial.oauth.waitForCompletion([oauthSession]);
+    ```
+  </Step>
+
+  <Step title="Use in Your Agent">
+    Pass both the deployment ID and OAuth session ID to your Metorial session:
+
+    ```typescript
+    await metorial.withProviderSession(
+        metorialAiSdk,
+        {
+            serverDeployments: [
+                {
+                    serverDeploymentId: deployment.id,
+                    oauthSessionId: oauthSession.id
+                }
+            ]
+        },
+        async ({ tools }) => {
+            // Agent can now use GitHub with your branded OAuth
+        }
+    );
+    ```
   </Step>
 </Steps>
 
-<Info>
-**Benefits:**
-- Consent screens show your company name and branding
-- Full control over scopes and permissions
-- Integrate with existing identity systems
-- Credentials stay in your infrastructure
-</Info>
+### What Users See
+
+With BYO OAuth apps, the consent screen shows:
+- ✅ Your company name
+- ✅ Your company logo (if configured)
+- ✅ Your chosen OAuth app name
+- ✅ Only the scopes you specified
+
+Without BYO, users see "Metorial" as the requesting application.
 
 ## BYO API Keys
 
-Use your own API keys for integrations like Exa, Brave, or Tavily.
+Use your own API keys for services like Exa, Brave Search, or Tavily. Perfect for multi-tenant isolation and cost tracking.
 
-<Info>
-**Use cases:**
-- Isolate usage per customer or team
-- Track costs per deployment
-- Rotate keys without affecting other deployments
-</Info>
+### Creating API Key Deployments
 
-Create deployments via the API with your keys—Metorial uses them when tools are called.
+<CodeGroup>
 
-## What's Next?
+```typescript TypeScript
+// Create deployment with your API key
+const deployment = await metorial.deployments.create({
+    serverId: 'exa',
+    name: 'Customer XYZ Search',
+    credentials: {
+        apiKey: process.env.CUSTOMER_EXA_API_KEY
+    }
+});
+
+// Use immediately
+await metorial.withProviderSession(
+    metorialAiSdk,
+    {
+        serverDeployments: [
+            { serverDeploymentId: deployment.id }
+        ]
+    },
+    async ({ tools }) => {
+        // Search using customer-specific API key
+    }
+);
+```
+
+```python Python
+# Create deployment with your API key
+deployment = metorial.deployments.create(
+    server_id="exa",
+    name="Customer XYZ Search",
+    credentials={
+        "api_key": os.getenv("CUSTOMER_EXA_API_KEY")
+    }
+)
+
+# Use immediately
+async with metorial.provider_session(
+    provider="anthropic",
+    server_deployments=[
+        {"serverDeploymentId": deployment.id}
+    ]
+) as session:
+    # Search using customer-specific API key
+    pass
+```
+
+</CodeGroup>
+
+### Multi-Tenant Isolation Pattern
+
+```typescript
+// Create separate deployments per customer
+async function provisionCustomer(customerId: string, apiKey: string) {
+    const deployment = await metorial.deployments.create({
+        serverId: 'exa',
+        name: `Customer ${customerId} Search`,
+        metadata: { customerId },  // Track which customer this is for
+        credentials: { apiKey }
+    });
+
+    // Store deployment ID in your database
+    await db.customers.update(customerId, {
+        exaDeploymentId: deployment.id
+    });
+
+    return deployment;
+}
+
+// Later, retrieve and use customer-specific deployment
+async function runSearchForCustomer(customerId: string, query: string) {
+    const customer = await db.customers.get(customerId);
+
+    await metorial.withProviderSession(
+        metorialAiSdk,
+        {
+            serverDeployments: [
+                { serverDeploymentId: customer.exaDeploymentId }
+            ]
+        },
+        async ({ tools }) => {
+            // Search uses this customer's API key
+            // Usage and costs are isolated per customer
+        }
+    );
+}
+```
+
+## Managing Deployments
+
+### List All Deployments
+
+```typescript
+const deployments = await metorial.deployments.list({
+    serverId: 'github',  // Optional: filter by service
+    limit: 100
+});
+
+deployments.forEach(d => {
+    console.log(`${d.name}: ${d.id}`);
+});
+```
+
+### Update Credentials
+
+```typescript
+// Rotate credentials without changing deployment ID
+await metorial.deployments.update(deploymentId, {
+    credentials: {
+        clientId: newClientId,
+        clientSecret: newClientSecret
+    }
+});
+```
+
+### Delete Deployments
+
+```typescript
+// Remove deployment when no longer needed
+await metorial.deployments.delete(deploymentId);
+```
+
+## Security Best Practices
+
+<AccordionGroup>
+  <Accordion title="Store Credentials Securely">
+    - Use a secrets manager (AWS Secrets Manager, HashiCorp Vault, etc.)
+    - Never commit credentials to version control
+    - Rotate credentials regularly
+    - Use environment-specific credentials for dev/staging/prod
+  </Accordion>
+
+  <Accordion title="Implement Credential Rotation">
+    - Set up automated rotation schedules
+    - Update deployments via API when rotating
+    - Test new credentials before removing old ones
+    - Monitor for authentication failures
+  </Accordion>
+
+  <Accordion title="Audit and Monitor">
+    - Log all deployment creation and updates
+    - Track which deployments are used by which customers
+    - Monitor OAuth session creation and authorization
+    - Set up alerts for unusual authentication patterns
+  </Accordion>
+
+  <Accordion title="Isolate Multi-Tenant Credentials">
+    - Create separate deployments per customer or team
+    - Never share credentials across tenants
+    - Use metadata to track ownership
+    - Implement deployment access controls
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="OAuth app configuration errors">
+    Verify your redirect URI is set to `https://oauth.metorial.com/callback` in your OAuth app settings. Check that all required scopes are included.
+  </Accordion>
+
+  <Accordion title="API key authentication failures">
+    Ensure your API key is valid and hasn't expired. Test the key directly with the service provider's API before using it in Metorial.
+  </Accordion>
+
+  <Accordion title="Deployment not found errors">
+    Verify the deployment ID is correct and the deployment hasn't been deleted. Use `metorial.deployments.list()` to see all active deployments.
+  </Accordion>
+
+  <Accordion title="Users see wrong OAuth app name">
+    Confirm you're using the BYO deployment ID, not a default Metorial deployment. Check that the OAuth app is correctly registered with your branding.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="API Guide" icon="code" href="/api-getting-started">
-    Learn how to use the Metorial API.
+  <Card title="API Reference" icon="code" href="/api-getting-started">
+    Complete API documentation for deployment management
   </Card>
   <Card title="OAuth Setup" icon="shield" href="/integrations-oauth">
-    Learn about OAuth integration patterns.
+    Learn about OAuth integration patterns and flows
+  </Card>
+  <Card title="Multi-Tenancy Guide" icon="users" href="/concepts-multi-tenancy">
+    Build multi-tenant applications with isolated credentials
+  </Card>
+  <Card title="Security Best Practices" icon="lock" href="/concepts-security">
+    Enterprise security and compliance guidance
   </Card>
 </CardGroup>
